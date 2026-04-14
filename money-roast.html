@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MONEY ROAST — Get Financially Destroyed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fire: #FF4500;
+    --ember: #FF8C00;
+    --gold: #FFD700;
+    --char: #0a0a0a;
+    --ash: #1a1a1a;
+    --smoke: #2a2a2a;
+    --pale: #f0ece4;
+    --cream: #faf7f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--char);
+    color: var(--pale);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(255,69,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 80% 20%, rgba(255,140,0,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(255,69,0,0.06) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 48px 0 0;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--fire);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 15vw, 130px);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    background: linear-gradient(160deg, #ffffff 0%, #FFD700 40%, #FF8C00 70%, #FF4500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(240,236,228,0.6);
+    margin-top: 16px;
+    letter-spacing: 0.01em;
+    font-style: italic;
+  }
+
+  .tagline span {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
+    opacity: 0.3;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--fire);
+  }
+  .divider-icon { font-size: 18px; }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .step {
+    background: var(--ash);
+    border: 1px solid rgba(255,69,0,0.15);
+    border-radius: 8px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--fire);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .step p {
+    font-size: 12px;
+    color: rgba(240,236,228,0.5);
+    line-height: 1.5;
+  }
+
+  /* MAIN FORM CARD */
+  .card {
+    background: var(--ash);
+    border: 1px solid rgba(255,69,0,0.2);
+    border-radius: 12px;
+    padding: 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--fire), var(--ember), var(--gold));
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    color: var(--pale);
+  }
+  .card-sub {
+    font-size: 13px;
+    color: rgba(240,236,228,0.45);
+    margin-bottom: 28px;
+  }
+
+  /* EXPENSE GRID */
+  .expense-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+  }
+  .field input {
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 11px 14px;
+    color: var(--pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .field input::placeholder { color: rgba(240,236,228,0.2); }
+  .field input:focus {
+    outline: none;
+    border-color: var(--fire);
+    background: rgba(255,69,0,0.05);
+  }
+  .field input:not(:placeholder-shown) {
+    border-color: rgba(255,140,0,0.3);
+  }
+
+  .income-field {
+    grid-column: span 2;
+    background: rgba(255,215,0,0.04);
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .income-field label {
+    color: var(--gold) !important;
+  }
+  .income-field input {
+    background: transparent;
+    border-color: rgba(255,215,0,0.2);
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .extras-row {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .extras-row textarea {
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 11px 14px;
+    color: var(--pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.5;
+  }
+  .extras-row textarea::placeholder { color: rgba(240,236,228,0.2); }
+  .extras-row textarea:focus {
+    outline: none;
+    border-color: var(--fire);
+  }
+
+  /* ROAST BUTTON */
+  .roast-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--fire) 0%, #ff2200 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 30px rgba(255,69,0,0.4);
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .roast-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(255,69,0,0.6);
+  }
+  .roast-btn:active { transform: translateY(0); }
+  .roast-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* LOADING STATE */
+  .loading-state {
+    display: none;
+    text-align: center;
+    padding: 48px 0;
+  }
+  .loading-state.active { display: block; }
+
+  .flame-loader {
+    font-size: 48px;
+    animation: flicker 0.4s ease-in-out infinite alternate;
+    display: block;
+    margin-bottom: 16px;
+  }
+  @keyframes flicker {
+    from { transform: scale(1) rotate(-3deg); opacity: 0.8; }
+    to { transform: scale(1.15) rotate(3deg); opacity: 1; }
+  }
+
+  .loading-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--fire);
+  }
+  .loading-sub {
+    font-size: 13px;
+    color: rgba(240,236,228,0.35);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ROAST RESULT */
+  .result-card {
+    display: none;
+    background: var(--ash);
+    border: 1px solid rgba(255,69,0,0.3);
+    border-radius: 12px;
+    padding: 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.5s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .result-card.active { display: block; }
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--fire), var(--ember), var(--gold), var(--ember), var(--fire));
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .result-emoji { font-size: 36px; }
+  .result-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    background: linear-gradient(90deg, var(--fire), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .result-sub { font-size: 13px; color: rgba(240,236,228,0.4); }
+
+  .roast-text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--pale);
+    white-space: pre-wrap;
+  }
+
+  /* Score badge */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    padding: 16px 20px;
+    background: rgba(255,69,0,0.08);
+    border: 1px solid rgba(255,69,0,0.2);
+    border-radius: 8px;
+  }
+  .score-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(240,236,228,0.5);
+    flex: 1;
+  }
+  .score-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--fire);
+    line-height: 1;
+  }
+  .score-max {
+    font-size: 13px;
+    color: rgba(240,236,228,0.3);
+    align-self: flex-end;
+    padding-bottom: 4px;
+  }
+  .score-bar {
+    flex: 2;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--fire), var(--gold));
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* Share / upsell */
+  .action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .btn-share {
+    padding: 13px;
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 7px;
+    color: var(--pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .btn-share:hover {
+    border-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.05);
+  }
+  .btn-upgrade {
+    padding: 13px;
+    background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,140,0,0.1));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 7px;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .btn-upgrade:hover {
+    background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,140,0,0.15));
+    border-color: rgba(255,215,0,0.5);
+  }
+
+  /* RESET */
+  .btn-reset {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 7px;
+    color: rgba(240,236,228,0.4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 12px;
+  }
+  .btn-reset:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--pale);
+  }
+
+  /* UPSELL CARD */
+  .upsell {
+    background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,69,0,0.05));
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+  .upsell h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .upsell p {
+    font-size: 13px;
+    color: rgba(240,236,228,0.5);
+    line-height: 1.5;
+  }
+  .upsell-price {
+    text-align: center;
+    padding: 16px 20px;
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .price-amt {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .price-per {
+    font-size: 11px;
+    color: rgba(240,236,228,0.35);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px 0 48px;
+    font-size: 12px;
+    color: rgba(240,236,228,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ERROR */
+  .error-msg {
+    display: none;
+    background: rgba(255,69,0,0.1);
+    border: 1px solid rgba(255,69,0,0.3);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #ff8a7a;
+    margin-top: 12px;
+  }
+  .error-msg.active { display: block; }
+
+  @media (max-width: 580px) {
+    .expense-grid { grid-template-columns: 1fr; }
+    .income-field { grid-column: span 1; }
+    .extras-row { grid-column: span 1; }
+    .steps { grid-template-columns: 1fr; }
+    .action-row { grid-template-columns: 1fr; }
+    .upsell { grid-template-columns: 1fr; }
+    .card { padding: 24px 20px; }
+    .result-card { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">🔥 Free Financial Reality Check</div>
+    <h1>MONEY<br>ROAST</h1>
+    <p class="tagline">Paste your expenses. Get <span>brutally honest</span> feedback.</p>
+  </header>
+
+  <div class="divider"><span class="divider-icon">🔥</span></div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Enter Your Numbers</div>
+      <p>Monthly income and where your money actually goes</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Get Roasted</div>
+      <p>AI delivers your financial reality check — no sugarcoating</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Get A Plan</div>
+      <p>Concrete steps to actually fix your money situation</p>
+    </div>
+  </div>
+
+  <!-- INPUT FORM -->
+  <div class="card" id="formCard">
+    <div class="card-title">Your Monthly Numbers</div>
+    <div class="card-sub">All fields are optional — the more you share, the better the roast.</div>
+
+    <div class="expense-grid">
+      <div class="field income-field">
+        <label>Monthly Take-Home Income</label>
+        <input type="number" id="income" placeholder="3500" min="0">
+      </div>
+
+      <div class="field">
+        <label>Rent / Mortgage</label>
+        <input type="number" id="rent" placeholder="1200" min="0">
+      </div>
+      <div class="field">
+        <label>Groceries</label>
+        <input type="number" id="groceries" placeholder="400" min="0">
+      </div>
+      <div class="field">
+        <label>Eating Out / Takeout</label>
+        <input type="number" id="dining" placeholder="300" min="0">
+      </div>
+      <div class="field">
+        <label>Subscriptions</label>
+        <input type="number" id="subscriptions" placeholder="80" min="0">
+      </div>
+      <div class="field">
+        <label>Transportation / Gas</label>
+        <input type="number" id="transport" placeholder="200" min="0">
+      </div>
+      <div class="field">
+        <label>Entertainment</label>
+        <input type="number" id="entertainment" placeholder="150" min="0">
+      </div>
+      <div class="field">
+        <label>Shopping / Clothes</label>
+        <input type="number" id="shopping" placeholder="100" min="0">
+      </div>
+      <div class="field">
+        <label>Coffee / Drinks</label>
+        <input type="number" id="coffee" placeholder="60" min="0">
+      </div>
+      <div class="field">
+        <label>Current Savings / Month</label>
+        <input type="number" id="savings" placeholder="0" min="0">
+      </div>
+      <div class="field">
+        <label>Debt Payments</label>
+        <input type="number" id="debt" placeholder="0" min="0">
+      </div>
+
+      <div class="field extras-row">
+        <label>Anything else? (be honest)</label>
+        <textarea id="extras" placeholder="e.g. $200 on DoorDash, $80/mo gym I never use, bought a $400 air fryer last month..."></textarea>
+      </div>
+    </div>
+
+    <button class="roast-btn" id="roastBtn" onclick="getRoasted()">
+      🔥 ROAST MY FINANCES 🔥
+    </button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-state" id="loadingState">
+    <span class="flame-loader">🔥</span>
+    <div class="loading-text">Analyzing your financial chaos...</div>
+    <div class="loading-sub">Preparing your reality check. This might sting.</div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <span class="result-emoji">🔥</span>
+      <div>
+        <div class="result-title">YOUR FINANCIAL ROAST</div>
+        <div class="result-sub">Delivered with love (and zero mercy)</div>
+      </div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-label">Money Health Score</div>
+      <div class="score-number" id="scoreNum">--</div>
+      <div class="score-max">/100</div>
+      <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+    </div>
+
+    <div class="roast-text" id="roastOutput"></div>
+
+    <div class="action-row">
+      <button class="btn-share" onclick="copyRoast()">📋 Copy & Share</button>
+      <button class="btn-upgrade" onclick="showUpgrade()">⭐ Get Monthly Coaching</button>
+    </div>
+    <button class="btn-reset" onclick="resetApp()">← Roast different numbers</button>
+  </div>
+
+  <!-- UPSELL -->
+  <div class="upsell" id="upsellCard" style="display:none;">
+    <div>
+      <h3>💰 Money Coach — $9/month</h3>
+      <p>Track your spending month-over-month, get personalized savings goals, weekly check-ins, and watch your score climb. Cancel anytime.</p>
+    </div>
+    <div class="upsell-price">
+      <span class="price-amt">$9</span>
+      <span class="price-per">per month</span>
+    </div>
+  </div>
+
+  <footer>
+    MONEY ROAST · Free financial honesty · Your data never stored
+  </footer>
+</div>
+
+<script>
+  async function getRoasted() {
+    const income = document.getElementById('income').value;
+    const rent = document.getElementById('rent').value;
+    const groceries = document.getElementById('groceries').value;
+    const dining = document.getElementById('dining').value;
+    const subscriptions = document.getElementById('subscriptions').value;
+    const transport = document.getElementById('transport').value;
+    const entertainment = document.getElementById('entertainment').value;
+    const shopping = document.getElementById('shopping').value;
+    const coffee = document.getElementById('coffee').value;
+    const savings = document.getElementById('savings').value;
+    const debt = document.getElementById('debt').value;
+    const extras = document.getElementById('extras').value;
+
+    // Build a readable summary
+    const lines = [];
+    if (income) lines.push(`Monthly take-home income: $${income}`);
+    if (rent) lines.push(`Rent/mortgage: $${rent}`);
+    if (groceries) lines.push(`Groceries: $${groceries}`);
+    if (dining) lines.push(`Eating out/takeout: $${dining}`);
+    if (subscriptions) lines.push(`Subscriptions: $${subscriptions}`);
+    if (transport) lines.push(`Transportation/gas: $${transport}`);
+    if (entertainment) lines.push(`Entertainment: $${entertainment}`);
+    if (shopping) lines.push(`Shopping/clothes: $${shopping}`);
+    if (coffee) lines.push(`Coffee/drinks: $${coffee}`);
+    if (savings) lines.push(`Current monthly savings: $${savings}`);
+    if (debt) lines.push(`Monthly debt payments: $${debt}`);
+    if (extras) lines.push(`Other info: ${extras}`);
+
+    if (lines.length === 0) {
+      const err = document.getElementById('errorMsg');
+      err.textContent = 'Enter at least one number so we have something to roast you about.';
+      err.classList.add('active');
+      return;
+    }
+
+    document.getElementById('errorMsg').classList.remove('active');
+    document.getElementById('roastBtn').disabled = true;
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('loadingState').classList.add('active');
+    document.getElementById('resultCard').classList.remove('active');
+
+    const prompt = `You are a brutally honest but genuinely helpful financial coach. You have a sharp, witty sense of humor — you roast people's bad money habits like a comedian, but you always follow up with real, actionable advice that can actually change their life.
+
+The user has shared these monthly finances:
+${lines.join('\n')}
+
+Your response must follow this EXACT structure:
+
+SCORE: [give them a money health score from 0-100, be harsh and realistic]
+
+ROAST:
+[2-3 paragraphs. First, roast their worst spending habits with sharp wit and specific callouts. Be funny and real, not mean-spirited. Reference their actual numbers. Second, acknowledge anything they're doing right, even if it's small. Third, deliver the gut-punch reality of what their current habits mean for their future.]
+
+THE FIX:
+[Give 4 specific, numbered action items they can start this week. Be concrete with actual dollar amounts based on their data. No generic advice — make it personal to their numbers.]
+
+BOTTOM LINE:
+[One punchy closing line that's either motivating or darkly funny — the kind of thing they'd screenshot and share.]
+
+Keep the total response under 450 words. Write like a real person, not a financial textbook.`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const text = data.content?.map(b => b.text || '').join('') || '';
+
+      // Extract score
+      const scoreMatch = text.match(/SCORE:\s*(\d+)/i);
+      const score = scoreMatch ? parseInt(scoreMatch[1]) : 50;
+
+      // Clean output — remove the SCORE line, keep the rest
+      const cleanText = text.replace(/SCORE:\s*\d+\n?/i, '').trim();
+
+      document.getElementById('loadingState').classList.remove('active');
+      document.getElementById('resultCard').classList.add('active');
+      document.getElementById('roastOutput').textContent = cleanText;
+
+      // Animate score
+      document.getElementById('scoreNum').textContent = score;
+      setTimeout(() => {
+        document.getElementById('scoreFill').style.width = score + '%';
+      }, 200);
+
+      // Color code score
+      const scoreEl = document.getElementById('scoreNum');
+      if (score >= 70) scoreEl.style.color = '#4ade80';
+      else if (score >= 40) scoreEl.style.color = '#FFD700';
+      else scoreEl.style.color = '#FF4500';
+
+      window.lastRoastText = cleanText;
+
+    } catch (err) {
+      document.getElementById('loadingState').classList.remove('active');
+      document.getElementById('formCard').style.display = 'block';
+      document.getElementById('roastBtn').disabled = false;
+      const errorEl = document.getElementById('errorMsg');
+      errorEl.textContent = 'Something went wrong. Check your API key or try again.';
+      errorEl.classList.add('active');
+    }
+  }
+
+  function copyRoast() {
+    const text = window.lastRoastText || '';
+    navigator.clipboard.writeText('My Money Roast 🔥\n\n' + text + '\n\nGet yours at moneyroast.app').then(() => {
+      const btn = document.querySelector('.btn-share');
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy & Share', 2000);
+    });
+  }
+
+  function showUpgrade() {
+    document.getElementById('upsellCard').style.display = 'grid';
+    document.getElementById('upsellCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function resetApp() {
+    document.getElementById('formCard').style.display = 'block';
+    document.getElementById('resultCard').classList.remove('active');
+    document.getElementById('upsellCard').style.display = 'none';
+    document.getElementById('roastBtn').disabled = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
