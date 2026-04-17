@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin · Signal / AI</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:ital,wght@0,400;0,600;0,900;1,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --bg-raised: #0b111c;
+    --bg-card: #0e1624;
+    --border: #1a2435;
+    --border-hover: #2b3a55;
+    --text: #e6edf7;
+    --text-dim: #8a96ac;
+    --text-faint: #546075;
+    --accent: #4d8dff;
+    --accent-soft: #4d8dff22;
+    --accent-alt: #00d9c0;
+    --success: #4ade80;
+    --warn: #ffb347;
+    --danger: #ff6b6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(77, 141, 255, 0.1), transparent);
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .logo em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .header-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* LOGIN */
+  .login-box {
+    max-width: 400px;
+    margin: 80px auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+  }
+  .login-box h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .login-box h1 em { font-style: italic; color: var(--accent); font-weight: 900; }
+  .login-box p { color: var(--text-dim); margin-bottom: 28px; font-size: 14px; }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  input::placeholder, textarea::placeholder { color: var(--text-faint); }
+  textarea { min-height: 80px; font-family: 'Inter Tight', sans-serif; resize: vertical; }
+  label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    margin-top: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--accent); color: #000; width: 100%; margin-top: 20px; }
+  .btn-primary:hover { background: var(--accent-alt); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-ghost { background: transparent; border-color: var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); }
+  .btn-danger { background: transparent; border-color: var(--border); color: var(--danger); padding: 8px 14px; font-size: 11px; }
+  .btn-danger:hover { border-color: var(--danger); background: rgba(255, 107, 107, 0.1); }
+  .btn-small { padding: 6px 12px; font-size: 10px; }
+
+  /* PANEL */
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  .panel h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .panel h2 em { font-style: italic; color: var(--accent); font-weight: 900; }
+  .panel-sub {
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+
+  .url-fetch {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .url-fetch input { flex: 1; }
+  .url-fetch button { white-space: nowrap; padding: 0 18px; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .checkbox-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .checkbox-wrap input { width: auto; }
+  .checkbox-wrap label { margin: 0; font-size: 13px; text-transform: none; letter-spacing: 0; color: var(--text); }
+  .checkbox-wrap:hover { border-color: var(--accent); }
+
+  .preview {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    display: none;
+  }
+  .preview.show { display: flex; gap: 16px; }
+  .preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--bg-card);
+  }
+  .preview .info { flex: 1; min-width: 0; }
+  .preview .info strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .preview .info p { font-size: 13px; color: var(--text-dim); }
+
+  /* ARTICLES LIST */
+  .articles-list { display: flex; flex-direction: column; gap: 10px; }
+  .article-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .article-row:hover { border-color: var(--border-hover); }
+  .article-row.featured { border-left: 3px solid var(--accent); }
+  .article-icon {
+    width: 40px; height: 40px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text-faint);
+  }
+  .article-info { flex: 1; min-width: 0; }
+  .article-info strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .article-info small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .article-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-right: 8px;
+  }
+
+  .status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-top: 12px;
+    min-height: 18px;
+  }
+  .status.success { color: var(--success); }
+  .status.error { color: var(--danger); }
+  .status.loading { color: var(--text-dim); }
+
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginView">
+    <div class="login-box">
+      <h1>Admin <em>access</em></h1>
+      <p>Enter your admin password to manage articles.</p>
+      <form id="loginForm">
+        <label>Password</label>
+        <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password" required />
+        <button type="submit" class="btn btn-primary">Sign in →</button>
+        <div class="status error" id="loginStatus"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="adminView" class="hidden">
+    <div class="header">
+      <div class="logo">Signal<em>/AI</em> · admin</div>
+      <div>
+        <a href="index.html" class="btn btn-ghost btn-small" target="_blank">View site ↗</a>
+        <button class="btn btn-ghost btn-small" id="logoutBtn" style="margin-left: 8px;">Sign out</button>
+      </div>
+    </div>
+
+    <!-- ADD ARTICLE -->
+    <div class="panel">
+      <h2>Add <em>article</em></h2>
+      <p class="panel-sub">Paste a URL. Title, description, and image get auto-fetched. Edit if needed, then save.</p>
+
+      <label>Article URL</label>
+      <div class="url-fetch">
+        <input type="url" id="urlInput" placeholder="https://..." />
+        <button class="btn btn-ghost" id="fetchBtn">Auto-fetch →</button>
+      </div>
+      <div class="status" id="fetchStatus"></div>
+
+      <div class="preview" id="preview">
+        <img id="previewImg" src="" alt="" />
+        <div class="info">
+          <strong id="previewTitle"></strong>
+          <p id="previewDesc"></p>
+        </div>
+      </div>
+
+      <form id="addForm">
+        <div class="form-grid">
+          <div>
+            <label>Title</label>
+            <input type="text" id="titleInput" required />
+          </div>
+          <div>
+            <label>Source</label>
+            <input type="text" id="sourceInput" placeholder="e.g. TechCrunch" />
+          </div>
+        </div>
+
+        <label>Description</label>
+        <textarea id="descInput" placeholder="Short blurb — 1–2 sentences."></textarea>
+
+        <div class="form-grid">
+          <div>
+            <label>Image URL (optional)</label>
+            <input type="url" id="imageInput" />
+          </div>
+          <div>
+            <label>Tag</label>
+            <select id="tagInput">
+              <option>Model Release</option>
+              <option>Research</option>
+              <option>Industry</option>
+              <option>Tools</option>
+              <option>Policy</option>
+              <option>Open Source</option>
+              <option>Opinion</option>
+              <option>News</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="featuredInput" checked />
+          <span>Feature this article (shows in the curated section — otherwise it only appears if the user navigates there)</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary">Save article</button>
+        <div class="status" id="addStatus"></div>
+      </form>
+    </div>
+
+    <!-- ARTICLES LIST -->
+    <div class="panel">
+      <h2>Saved <em>articles</em></h2>
+      <p class="panel-sub">Featured articles show at the top of the news section. RSS articles auto-populate underneath — you don't manage those here.</p>
+      <div class="articles-list" id="articlesList">
+        <div class="empty">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'signal_admin_pwd';
+  let adminPassword = sessionStorage.getItem(STORAGE_KEY) || '';
+
+  const loginView = document.getElementById('loginView');
+  const adminView = document.getElementById('adminView');
+
+  function showAdmin() {
+    loginView.classList.add('hidden');
+    adminView.classList.remove('hidden');
+    loadArticles();
+  }
+  function showLogin() {
+    loginView.classList.remove('hidden');
+    adminView.classList.add('hidden');
+  }
+
+  // Auto-login if password in session storage
+  if (adminPassword) {
+    validateAuth().then(ok => ok ? showAdmin() : showLogin());
+  } else {
+    showLogin();
+  }
+
+  async function validateAuth() {
+    try {
+      const res = await api('list', {});
+      return !!res && !res.error;
+    } catch { return false; }
+  }
+
+  // ---- API helper ----
+  async function api(action, body = {}) {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-password': adminPassword
+      },
+      body: JSON.stringify({ action, ...body })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  // ---- Login ----
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('loginStatus');
+    adminPassword = document.getElementById('passwordInput').value;
+    status.textContent = 'Checking...';
+    status.className = 'status loading';
+
+    try {
+      await api('list');
+      sessionStorage.setItem(STORAGE_KEY, adminPassword);
+      status.textContent = '';
+      showAdmin();
+    } catch (err) {
+      adminPassword = '';
+      status.textContent = 'Wrong password.';
+      status.className = 'status error';
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem(STORAGE_KEY);
+    adminPassword = '';
+    showLogin();
+  });
+
+  // ---- Fetch metadata ----
+  document.getElementById('fetchBtn').addEventListener('click', async () => {
+    const url = document.getElementById('urlInput').value.trim();
+    const status = document.getElementById('fetchStatus');
+    if (!url) { status.textContent = 'Paste a URL first.'; status.className = 'status error'; return; }
+
+    status.textContent = 'Fetching metadata…';
+    status.className = 'status loading';
+
+    try {
+      const meta = await api('fetch-metadata', { url });
+      if (meta.error) throw new Error(meta.error);
+
+      document.getElementById('titleInput').value = meta.title || '';
+      document.getElementById('descInput').value = meta.description || '';
+      document.getElementById('imageInput').value = meta.image_url || '';
+      document.getElementById('sourceInput').value = meta.source || '';
+
+      // Show preview
+      const preview = document.getElementById('preview');
+      document.getElementById('previewTitle').textContent = meta.title || '(no title)';
+      document.getElementById('previewDesc').textContent = meta.description || '';
+      const img = document.getElementById('previewImg');
+      if (meta.image_url) { img.src = meta.image_url; img.style.display = ''; }
+      else { img.style.display = 'none'; }
+      preview.classList.add('show');
+
+      status.textContent = '✓ Fetched. Edit fields if needed.';
+      status.className = 'status success';
+    } catch (err) {
+      status.textContent = 'Fetch failed: ' + err.message;
+      status.className = 'status error';
+    }
+  });
+
+  // ---- Add article ----
+  document.getElementById('addForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('addStatus');
+    status.textContent = 'Saving…';
+    status.className = 'status loading';
+
+    const payload = {
+      url: document.getElementById('urlInput').value.trim(),
+      title: document.getElementById('titleInput').value.trim(),
+      description: document.getElementById('descInput').value.trim(),
+      image_url: document.getElementById('imageInput').value.trim(),
+      source: document.getElementById('sourceInput').value.trim(),
+      tag: document.getElementById('tagInput').value,
+      featured: document.getElementById('featuredInput').checked
+    };
+
+    try {
+      await api('add', payload);
+      status.textContent = '✓ Saved!';
+      status.className = 'status success';
+      document.getElementById('addForm').reset();
+      document.getElementById('urlInput').value = '';
+      document.getElementById('featuredInput').checked = true;
+      document.getElementById('preview').classList.remove('show');
+      loadArticles();
+    } catch (err) {
+      status.textContent = 'Save failed: ' + err.message;
+      status.className = 'status error';
+    }
+  });
+
+  // ---- List articles ----
+  async function loadArticles() {
+    const list = document.getElementById('articlesList');
+    list.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+      const { articles } = await api('list');
+      if (!articles || articles.length === 0) {
+        list.innerHTML = '<div class="empty">No articles yet. Paste a URL above to add the first one.</div>';
+        return;
+      }
+      list.innerHTML = articles.map(renderRow).join('');
+      attachRowHandlers();
+    } catch (err) {
+      list.innerHTML = '<div class="empty" style="color: var(--danger)">Error: ' + err.message + '</div>';
+    }
+  }
+
+  function renderRow(a) {
+    const date = new Date(a.published_at || a.created_at).toLocaleDateString();
+    const imgStyle = a.image_url ? `background-image: url('${escapeAttr(a.image_url)}');` : '';
+    const icon = a.image_url ? '' : '↗';
+    return `
+      <div class="article-row ${a.featured ? 'featured' : ''}">
+        <div class="article-icon" style="${imgStyle}">${icon}</div>
+        <div class="article-info">
+          <strong>${escapeHtml(a.title)}</strong>
+          <small>${a.featured ? '<span class="badge">Featured</span>' : ''}${escapeHtml(a.source || '')} · ${escapeHtml(a.tag || '')} · ${date}</small>
+        </div>
+        <div class="article-actions">
+          <button class="btn btn-ghost btn-small toggle-feature" data-id="${a.id}" data-featured="${!a.featured}">
+            ${a.featured ? 'Unfeature' : 'Feature'}
+          </button>
+          <a href="${escapeAttr(a.url)}" class="btn btn-ghost btn-small" target="_blank">Open ↗</a>
+          <button class="btn btn-danger delete-btn" data-id="${a.id}">Delete</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function attachRowHandlers() {
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Delete this article?')) return;
+        await api('delete', { id: btn.dataset.id });
+        loadArticles();
+      });
+    });
+    document.querySelectorAll('.toggle-feature').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const featured = btn.dataset.featured === 'true';
+        await api('update', { id: btn.dataset.id, featured });
+        loadArticles();
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return (s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+</script>
+
+</body>
+</html>
