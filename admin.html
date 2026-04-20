@@ -35,31 +35,56 @@
     min-height: 100vh;
     background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(77, 141, 255, 0.1), transparent);
   }
-
   .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
   }
-  .logo {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-size: 22px;
-    letter-spacing: -0.02em;
-  }
+  .logo { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; letter-spacing: -0.02em; }
   .logo em { font-style: italic; color: var(--accent); font-weight: 400; }
-  .header-info {
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: var(--text-faint);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
   }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-count {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    background: var(--bg-card);
+    border-radius: 4px;
+    font-size: 10px;
+  }
+  .tab.active .tab-count { background: var(--accent-soft); color: var(--accent); }
 
   /* LOGIN */
   .login-box {
@@ -132,50 +157,41 @@
   .btn-danger:hover { border-color: var(--danger); background: rgba(255, 107, 107, 0.1); }
   .btn-small { padding: 6px 12px; font-size: 10px; }
 
-  /* PANEL */
   .panel {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
   .panel h2 {
     font-family: 'Fraunces', serif;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 26px;
     margin-bottom: 6px;
     letter-spacing: -0.02em;
   }
   .panel h2 em { font-style: italic; color: var(--accent); font-weight: 900; }
-  .panel-sub {
-    color: var(--text-dim);
-    margin-bottom: 24px;
-    font-size: 14px;
-  }
-
-  .url-fetch {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-  .url-fetch input { flex: 1; }
-  .url-fetch button { white-space: nowrap; padding: 0 18px; }
+  .panel-sub { color: var(--text-dim); margin-bottom: 24px; font-size: 14px; }
 
   .form-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 16px;
-    margin-top: 16px;
   }
-  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .form-grid, .form-grid-3 { grid-template-columns: 1fr; } }
+
+  .url-fetch { display: flex; gap: 8px; margin-bottom: 4px; }
+  .url-fetch input { flex: 1; }
+  .url-fetch button { white-space: nowrap; padding: 0 18px; }
 
   .checkbox-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
-    padding: 14px 16px;
+    margin-top: 16px;
+    padding: 12px 16px;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -186,7 +202,7 @@
   .checkbox-wrap:hover { border-color: var(--accent); }
 
   .preview {
-    margin-top: 20px;
+    margin-top: 16px;
     padding: 16px;
     background: var(--bg);
     border: 1px dashed var(--border);
@@ -195,8 +211,7 @@
   }
   .preview.show { display: flex; gap: 16px; }
   .preview img {
-    width: 100px;
-    height: 100px;
+    width: 80px; height: 80px;
     object-fit: cover;
     border-radius: 6px;
     background: var(--bg-card);
@@ -205,28 +220,31 @@
   .preview .info strong {
     display: block;
     font-family: 'Fraunces', serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
     line-height: 1.3;
   }
-  .preview .info p { font-size: 13px; color: var(--text-dim); }
+  .preview .info p { font-size: 12px; color: var(--text-dim); }
 
-  /* ARTICLES LIST */
-  .articles-list { display: flex; flex-direction: column; gap: 10px; }
-  .article-row {
+  /* ROWS */
+  .list { display: flex; flex-direction: column; gap: 10px; }
+  .row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     padding: 14px 16px;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 10px;
     transition: border-color 0.2s;
   }
-  .article-row:hover { border-color: var(--border-hover); }
-  .article-row.featured { border-left: 3px solid var(--accent); }
-  .article-icon {
+  .row:hover { border-color: var(--border-hover); }
+  .row.featured { border-left: 3px solid var(--accent); }
+  .row.pinned { border-left: 3px solid var(--accent-alt); }
+  .row.public { border-left: 3px solid var(--success); }
+
+  .row-icon {
     width: 40px; height: 40px;
     border-radius: 6px;
     background: var(--bg-card);
@@ -240,8 +258,8 @@
     font-size: 14px;
     color: var(--text-faint);
   }
-  .article-info { flex: 1; min-width: 0; }
-  .article-info strong {
+  .row-info { flex: 1; min-width: 0; }
+  .row-info strong {
     display: block;
     font-family: 'Fraunces', serif;
     font-weight: 600;
@@ -251,14 +269,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .article-info small {
+  .row-info small {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--text-faint);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .article-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .row-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
   .badge {
     display: inline-block;
     padding: 2px 8px;
@@ -267,7 +286,25 @@
     font-size: 10px;
     background: var(--accent-soft);
     color: var(--accent);
-    margin-right: 8px;
+    margin-right: 6px;
+  }
+  .badge-alt { background: rgba(0, 217, 192, 0.15); color: var(--accent-alt); }
+  .badge-warn { background: rgba(255, 179, 71, 0.15); color: var(--warn); }
+  .badge-dim { background: var(--bg-card); color: var(--text-faint); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    width: 80px;
+    height: 4px;
+    background: var(--bg-card);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+    transition: width 0.3s;
   }
 
   .status {
@@ -287,19 +324,46 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
   }
-
   .hidden { display: none !important; }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .stat-value em { font-style: italic; color: var(--accent); }
 </style>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- LOGIN SCREEN -->
+  <!-- LOGIN -->
   <div id="loginView">
     <div class="login-box">
       <h1>Admin <em>access</em></h1>
-      <p>Enter your admin password to manage articles.</p>
+      <p>Enter your admin password.</p>
       <form id="loginForm">
         <label>Password</label>
         <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password" required />
@@ -309,89 +373,200 @@
     </div>
   </div>
 
-  <!-- ADMIN DASHBOARD -->
+  <!-- DASHBOARD -->
   <div id="adminView" class="hidden">
     <div class="header">
       <div class="logo">Signal<em>/AI</em> · admin</div>
       <div>
-        <a href="index.html" class="btn btn-ghost btn-small" target="_blank">View site ↗</a>
-        <button class="btn btn-ghost btn-small" id="logoutBtn" style="margin-left: 8px;">Sign out</button>
+        <a href="index.html" class="btn btn-ghost btn-small" target="_blank">Site ↗</a>
+        <a href="projects.html" class="btn btn-ghost btn-small" target="_blank" style="margin-left: 6px;">Projects ↗</a>
+        <button class="btn btn-ghost btn-small" id="logoutBtn" style="margin-left: 6px;">Sign out</button>
       </div>
     </div>
 
-    <!-- ADD ARTICLE -->
-    <div class="panel">
-      <h2>Add <em>article</em></h2>
-      <p class="panel-sub">Paste a URL. Title, description, and image get auto-fetched. Edit if needed, then save.</p>
-
-      <label>Article URL</label>
-      <div class="url-fetch">
-        <input type="url" id="urlInput" placeholder="https://..." />
-        <button class="btn btn-ghost" id="fetchBtn">Auto-fetch →</button>
-      </div>
-      <div class="status" id="fetchStatus"></div>
-
-      <div class="preview" id="preview">
-        <img id="previewImg" src="" alt="" />
-        <div class="info">
-          <strong id="previewTitle"></strong>
-          <p id="previewDesc"></p>
-        </div>
-      </div>
-
-      <form id="addForm">
-        <div class="form-grid">
-          <div>
-            <label>Title</label>
-            <input type="text" id="titleInput" required />
-          </div>
-          <div>
-            <label>Source</label>
-            <input type="text" id="sourceInput" placeholder="e.g. TechCrunch" />
-          </div>
-        </div>
-
-        <label>Description</label>
-        <textarea id="descInput" placeholder="Short blurb — 1–2 sentences."></textarea>
-
-        <div class="form-grid">
-          <div>
-            <label>Image URL (optional)</label>
-            <input type="url" id="imageInput" />
-          </div>
-          <div>
-            <label>Tag</label>
-            <select id="tagInput">
-              <option>Model Release</option>
-              <option>Research</option>
-              <option>Industry</option>
-              <option>Tools</option>
-              <option>Policy</option>
-              <option>Open Source</option>
-              <option>Opinion</option>
-              <option>News</option>
-            </select>
-          </div>
-        </div>
-
-        <label class="checkbox-wrap">
-          <input type="checkbox" id="featuredInput" checked />
-          <span>Feature this article (shows in the curated section — otherwise it only appears if the user navigates there)</span>
-        </label>
-
-        <button type="submit" class="btn btn-primary">Save article</button>
-        <div class="status" id="addStatus"></div>
-      </form>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-tab="articles">Articles <span class="tab-count" id="count-articles">—</span></button>
+      <button class="tab" data-tab="projects">Projects <span class="tab-count" id="count-projects">—</span></button>
+      <button class="tab" data-tab="portfolio">Portfolio <span class="tab-count" id="count-portfolio">—</span></button>
+      <button class="tab" data-tab="links">Links <span class="tab-count" id="count-links">—</span></button>
     </div>
 
-    <!-- ARTICLES LIST -->
-    <div class="panel">
-      <h2>Saved <em>articles</em></h2>
-      <p class="panel-sub">Featured articles show at the top of the news section. RSS articles auto-populate underneath — you don't manage those here.</p>
-      <div class="articles-list" id="articlesList">
-        <div class="empty">Loading…</div>
+    <!-- ======== ARTICLES TAB ======== -->
+    <div class="tab-pane" id="pane-articles">
+      <div class="panel">
+        <h2>Add <em>article</em></h2>
+        <p class="panel-sub">Paste a URL — metadata auto-fetches.</p>
+        <label>Article URL</label>
+        <div class="url-fetch">
+          <input type="url" id="a-url" placeholder="https://..." />
+          <button class="btn btn-ghost" id="a-fetchBtn">Auto-fetch →</button>
+        </div>
+        <div class="status" id="a-fetchStatus"></div>
+        <div class="preview" id="a-preview">
+          <img id="a-previewImg" src="" alt="" />
+          <div class="info"><strong id="a-previewTitle"></strong><p id="a-previewDesc"></p></div>
+        </div>
+        <form id="a-form">
+          <div class="form-grid">
+            <div><label>Title</label><input type="text" id="a-title" required /></div>
+            <div><label>Source</label><input type="text" id="a-source" placeholder="TechCrunch" /></div>
+          </div>
+          <label>Description</label>
+          <textarea id="a-desc"></textarea>
+          <div class="form-grid">
+            <div><label>Image URL</label><input type="url" id="a-image" /></div>
+            <div>
+              <label>Tag</label>
+              <select id="a-tag">
+                <option>Model Release</option><option>Research</option><option>Industry</option>
+                <option>Tools</option><option>Policy</option><option>Open Source</option>
+                <option>Opinion</option><option>News</option>
+              </select>
+            </div>
+          </div>
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="a-featured" checked />
+            <span>Feature this article (show in curated section)</span>
+          </label>
+          <button type="submit" class="btn btn-primary">Save article</button>
+          <div class="status" id="a-addStatus"></div>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Saved <em>articles</em></h2>
+        <div class="list" id="a-list"><div class="empty">Loading…</div></div>
       </div>
     </div>
+
+    <!-- ======== PROJECTS TAB ======== -->
+    <div class="tab-pane hidden" id="pane-projects">
+      <div class="stats" id="p-stats"></div>
+      <div class="panel">
+        <h2>Add <em>project</em></h2>
+        <p class="panel-sub">Track ongoing contracted work. Client name stays private by default; flip "Show publicly" to display an anonymized version on projects.html.</p>
+        <form id="p-form">
+          <div class="form-grid">
+            <div><label>Project title</label><input type="text" id="p-title" required /></div>
+            <div><label>Client name (private)</label><input type="text" id="p-client" /></div>
+          </div>
+          <label>Description</label>
+          <textarea id="p-desc" placeholder="What you're building for them"></textarea>
+          <div class="form-grid-3">
+            <div>
+              <label>Status</label>
+              <select id="p-status">
+                <option value="planning">Planning</option>
+                <option value="in_progress" selected>In progress</option>
+                <option value="review">In review</option>
+                <option value="blocked">Blocked</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+            <div><label>Progress (0-100)</label><input type="number" id="p-progress" min="0" max="100" value="0" /></div>
+            <div><label>Hours logged</label><input type="number" step="0.5" id="p-hours" value="0" /></div>
+          </div>
+          <div class="form-grid-3">
+            <div><label>Start date</label><input type="date" id="p-start" /></div>
+            <div><label>Due date</label><input type="date" id="p-due" /></div>
+            <div><label>Hourly rate ($)</label><input type="number" id="p-rate" /></div>
+          </div>
+          <div class="form-grid">
+            <div><label>Budget ($)</label><input type="number" id="p-budget" /></div>
+            <div><label>Tags (comma-separated)</label><input type="text" id="p-tags" placeholder="react, api, aws" /></div>
+          </div>
+          <label>Repo / work URL (optional)</label>
+          <input type="url" id="p-repo" />
+          <label>Private notes</label>
+          <textarea id="p-notes" placeholder="Anything only you should see"></textarea>
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="p-public" />
+            <span>Show on public projects page (anonymized — no client name, rates, budget, or notes)</span>
+          </label>
+          <button type="submit" class="btn btn-primary">Save project</button>
+          <div class="status" id="p-addStatus"></div>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Active <em>projects</em></h2>
+        <div class="list" id="p-list"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ======== PORTFOLIO TAB ======== -->
+    <div class="tab-pane hidden" id="pane-portfolio">
+      <div class="panel">
+        <h2>Add <em>portfolio item</em></h2>
+        <p class="panel-sub">GitHub-style repos for completed work. Public.</p>
+        <form id="f-form">
+          <div class="form-grid">
+            <div><label>Project name</label><input type="text" id="f-name" required /></div>
+            <div>
+              <label>Category</label>
+              <select id="f-category">
+                <option>Web</option><option>AI</option><option>Infrastructure</option>
+                <option>Mobile</option><option>Data</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+          <label>Description</label>
+          <textarea id="f-desc"></textarea>
+          <div class="form-grid">
+            <div><label>Repo URL (GitHub, GitLab, etc)</label><input type="url" id="f-repo" /></div>
+            <div><label>Live URL (optional)</label><input type="url" id="f-live" /></div>
+          </div>
+          <div class="form-grid-3">
+            <div><label>Primary language</label><input type="text" id="f-lang" placeholder="TypeScript" /></div>
+            <div><label>Lang color (hex)</label><input type="text" id="f-langColor" placeholder="#3178c6" value="#4d8dff" /></div>
+            <div><label>Completed date</label><input type="date" id="f-date" /></div>
+          </div>
+          <label>Tech stack (comma-separated)</label>
+          <input type="text" id="f-stack" placeholder="React, Node, Postgres" />
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="f-pinned" />
+            <span>Pin to top (shows first)</span>
+          </label>
+          <button type="submit" class="btn btn-primary">Save item</button>
+          <div class="status" id="f-addStatus"></div>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Portfolio <em>grid</em></h2>
+        <div class="list" id="f-list"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ======== LINKS TAB ======== -->
+    <div class="tab-pane hidden" id="pane-links">
+      <div class="panel">
+        <h2>Add <em>link</em></h2>
+        <p class="panel-sub">Social / business profiles. Shown at the top of projects.html.</p>
+        <form id="l-form">
+          <div class="form-grid-3">
+            <div>
+              <label>Platform</label>
+              <select id="l-platform">
+                <option>github</option><option>linkedin</option><option>twitter</option><option>x</option>
+                <option>youtube</option><option>instagram</option><option>email</option>
+                <option>website</option><option>mastodon</option><option>bluesky</option>
+                <option>dribbble</option><option>other</option>
+              </select>
+            </div>
+            <div><label>URL</label><input type="url" id="l-url" required /></div>
+            <div><label>Label (optional)</label><input type="text" id="l-label" /></div>
+          </div>
+          <label>Sort order</label>
+          <input type="number" id="l-sort" value="0" />
+          <button type="submit" class="btn btn-primary">Save link</button>
+          <div class="status" id="l-addStatus"></div>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Your <em>links</em></h2>
+        <div class="list" id="l-list"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -405,35 +580,27 @@
   function showAdmin() {
     loginView.classList.add('hidden');
     adminView.classList.remove('hidden');
-    loadArticles();
+    loadAll();
   }
   function showLogin() {
     loginView.classList.remove('hidden');
     adminView.classList.add('hidden');
   }
 
-  // Auto-login if password in session storage
-  if (adminPassword) {
-    validateAuth().then(ok => ok ? showAdmin() : showLogin());
-  } else {
-    showLogin();
-  }
+  if (adminPassword) validateAuth().then(ok => ok ? showAdmin() : showLogin());
+  else showLogin();
 
   async function validateAuth() {
     try {
-      const res = await api('list', {});
-      return !!res && !res.error;
+      const r = await api('articles:list');
+      return !!r && !r.error;
     } catch { return false; }
   }
 
-  // ---- API helper ----
   async function api(action, body = {}) {
     const res = await fetch('/api/admin', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-admin-password': adminPassword
-      },
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
       body: JSON.stringify({ action, ...body })
     });
     const data = await res.json();
@@ -444,20 +611,18 @@
   // ---- Login ----
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const status = document.getElementById('loginStatus');
+    const s = document.getElementById('loginStatus');
     adminPassword = document.getElementById('passwordInput').value;
-    status.textContent = 'Checking...';
-    status.className = 'status loading';
-
+    s.textContent = 'Checking...'; s.className = 'status loading';
     try {
-      await api('list');
+      await api('articles:list');
       sessionStorage.setItem(STORAGE_KEY, adminPassword);
-      status.textContent = '';
+      s.textContent = '';
       showAdmin();
-    } catch (err) {
+    } catch {
       adminPassword = '';
-      status.textContent = 'Wrong password.';
-      status.className = 'status error';
+      s.textContent = 'Wrong password.';
+      s.className = 'status error';
     }
   });
 
@@ -467,133 +632,346 @@
     showLogin();
   });
 
-  // ---- Fetch metadata ----
-  document.getElementById('fetchBtn').addEventListener('click', async () => {
-    const url = document.getElementById('urlInput').value.trim();
-    const status = document.getElementById('fetchStatus');
-    if (!url) { status.textContent = 'Paste a URL first.'; status.className = 'status error'; return; }
+  // ---- Tab switching ----
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+      tab.classList.add('active');
+      document.getElementById('pane-' + tab.dataset.tab).classList.remove('hidden');
+    });
+  });
 
-    status.textContent = 'Fetching metadata…';
-    status.className = 'status loading';
+  // ---- Load everything on login ----
+  async function loadAll() {
+    loadArticles();
+    loadProjects();
+    loadPortfolio();
+    loadLinks();
+  }
 
+  // =========================================================
+  // ARTICLES
+  // =========================================================
+  document.getElementById('a-fetchBtn').addEventListener('click', async () => {
+    const url = document.getElementById('a-url').value.trim();
+    const s = document.getElementById('a-fetchStatus');
+    if (!url) { s.textContent = 'Paste a URL.'; s.className = 'status error'; return; }
+    s.textContent = 'Fetching…'; s.className = 'status loading';
     try {
       const meta = await api('fetch-metadata', { url });
       if (meta.error) throw new Error(meta.error);
-
-      document.getElementById('titleInput').value = meta.title || '';
-      document.getElementById('descInput').value = meta.description || '';
-      document.getElementById('imageInput').value = meta.image_url || '';
-      document.getElementById('sourceInput').value = meta.source || '';
-
-      // Show preview
-      const preview = document.getElementById('preview');
-      document.getElementById('previewTitle').textContent = meta.title || '(no title)';
-      document.getElementById('previewDesc').textContent = meta.description || '';
-      const img = document.getElementById('previewImg');
-      if (meta.image_url) { img.src = meta.image_url; img.style.display = ''; }
-      else { img.style.display = 'none'; }
-      preview.classList.add('show');
-
-      status.textContent = '✓ Fetched. Edit fields if needed.';
-      status.className = 'status success';
+      document.getElementById('a-title').value = meta.title || '';
+      document.getElementById('a-desc').value = meta.description || '';
+      document.getElementById('a-image').value = meta.image_url || '';
+      document.getElementById('a-source').value = meta.source || '';
+      const p = document.getElementById('a-preview');
+      document.getElementById('a-previewTitle').textContent = meta.title || '';
+      document.getElementById('a-previewDesc').textContent = meta.description || '';
+      const img = document.getElementById('a-previewImg');
+      if (meta.image_url) { img.src = meta.image_url; img.style.display = ''; } else { img.style.display = 'none'; }
+      p.classList.add('show');
+      s.textContent = '✓ Fetched.'; s.className = 'status success';
     } catch (err) {
-      status.textContent = 'Fetch failed: ' + err.message;
-      status.className = 'status error';
+      s.textContent = 'Failed: ' + err.message; s.className = 'status error';
     }
   });
 
-  // ---- Add article ----
-  document.getElementById('addForm').addEventListener('submit', async (e) => {
+  document.getElementById('a-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const status = document.getElementById('addStatus');
-    status.textContent = 'Saving…';
-    status.className = 'status loading';
-
-    const payload = {
-      url: document.getElementById('urlInput').value.trim(),
-      title: document.getElementById('titleInput').value.trim(),
-      description: document.getElementById('descInput').value.trim(),
-      image_url: document.getElementById('imageInput').value.trim(),
-      source: document.getElementById('sourceInput').value.trim(),
-      tag: document.getElementById('tagInput').value,
-      featured: document.getElementById('featuredInput').checked
-    };
-
+    const s = document.getElementById('a-addStatus');
+    s.textContent = 'Saving…'; s.className = 'status loading';
     try {
-      await api('add', payload);
-      status.textContent = '✓ Saved!';
-      status.className = 'status success';
-      document.getElementById('addForm').reset();
-      document.getElementById('urlInput').value = '';
-      document.getElementById('featuredInput').checked = true;
-      document.getElementById('preview').classList.remove('show');
+      await api('articles:add', {
+        url: document.getElementById('a-url').value.trim(),
+        title: document.getElementById('a-title').value.trim(),
+        description: document.getElementById('a-desc').value.trim(),
+        image_url: document.getElementById('a-image').value.trim(),
+        source: document.getElementById('a-source').value.trim(),
+        tag: document.getElementById('a-tag').value,
+        featured: document.getElementById('a-featured').checked,
+        published_at: new Date().toISOString()
+      });
+      s.textContent = '✓ Saved!'; s.className = 'status success';
+      e.target.reset();
+      document.getElementById('a-featured').checked = true;
+      document.getElementById('a-preview').classList.remove('show');
       loadArticles();
     } catch (err) {
-      status.textContent = 'Save failed: ' + err.message;
-      status.className = 'status error';
+      s.textContent = 'Failed: ' + err.message; s.className = 'status error';
     }
   });
 
-  // ---- List articles ----
   async function loadArticles() {
-    const list = document.getElementById('articlesList');
+    const list = document.getElementById('a-list');
     list.innerHTML = '<div class="empty">Loading…</div>';
     try {
-      const { articles } = await api('list');
-      if (!articles || articles.length === 0) {
-        list.innerHTML = '<div class="empty">No articles yet. Paste a URL above to add the first one.</div>';
-        return;
-      }
-      list.innerHTML = articles.map(renderRow).join('');
-      attachRowHandlers();
+      const { items } = await api('articles:list');
+      document.getElementById('count-articles').textContent = items.length;
+      if (!items.length) { list.innerHTML = '<div class="empty">No articles yet.</div>'; return; }
+      list.innerHTML = items.map(a => {
+        const date = new Date(a.published_at || a.created_at).toLocaleDateString();
+        const imgStyle = a.image_url ? `background-image:url('${esc(a.image_url)}');` : '';
+        return `<div class="row ${a.featured ? 'featured' : ''}">
+          <div class="row-icon" style="${imgStyle}">${a.image_url ? '' : '↗'}</div>
+          <div class="row-info">
+            <strong>${esc(a.title)}</strong>
+            <small>${a.featured ? '<span class="badge">Featured</span>' : ''}${esc(a.source || '')} · ${esc(a.tag || '')} · ${date}</small>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-ghost btn-small" data-act="toggle-feature" data-id="${a.id}" data-val="${!a.featured}">${a.featured ? 'Unfeature' : 'Feature'}</button>
+            <a href="${esc(a.url)}" class="btn btn-ghost btn-small" target="_blank">Open</a>
+            <button class="btn btn-danger btn-small" data-act="delete-article" data-id="${a.id}">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+      list.querySelectorAll('[data-act="toggle-feature"]').forEach(b => b.onclick = async () => {
+        await api('articles:update', { id: b.dataset.id, featured: b.dataset.val === 'true' });
+        loadArticles();
+      });
+      list.querySelectorAll('[data-act="delete-article"]').forEach(b => b.onclick = async () => {
+        if (!confirm('Delete this article?')) return;
+        await api('articles:delete', { id: b.dataset.id });
+        loadArticles();
+      });
     } catch (err) {
-      list.innerHTML = '<div class="empty" style="color: var(--danger)">Error: ' + err.message + '</div>';
+      list.innerHTML = `<div class="empty" style="color:var(--danger)">${err.message}</div>`;
     }
   }
 
-  function renderRow(a) {
-    const date = new Date(a.published_at || a.created_at).toLocaleDateString();
-    const imgStyle = a.image_url ? `background-image: url('${escapeAttr(a.image_url)}');` : '';
-    const icon = a.image_url ? '' : '↗';
-    return `
-      <div class="article-row ${a.featured ? 'featured' : ''}">
-        <div class="article-icon" style="${imgStyle}">${icon}</div>
-        <div class="article-info">
-          <strong>${escapeHtml(a.title)}</strong>
-          <small>${a.featured ? '<span class="badge">Featured</span>' : ''}${escapeHtml(a.source || '')} · ${escapeHtml(a.tag || '')} · ${date}</small>
-        </div>
-        <div class="article-actions">
-          <button class="btn btn-ghost btn-small toggle-feature" data-id="${a.id}" data-featured="${!a.featured}">
-            ${a.featured ? 'Unfeature' : 'Feature'}
-          </button>
-          <a href="${escapeAttr(a.url)}" class="btn btn-ghost btn-small" target="_blank">Open ↗</a>
-          <button class="btn btn-danger delete-btn" data-id="${a.id}">Delete</button>
-        </div>
-      </div>
-    `;
+  // =========================================================
+  // PROJECTS
+  // =========================================================
+  const STATUS_LABELS = {
+    planning: 'Planning',
+    in_progress: 'In progress',
+    review: 'In review',
+    blocked: 'Blocked',
+    completed: 'Completed'
+  };
+  const STATUS_BADGE = {
+    planning: 'badge-dim',
+    in_progress: 'badge',
+    review: 'badge-alt',
+    blocked: 'badge-warn',
+    completed: 'badge-alt'
+  };
+
+  document.getElementById('p-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const s = document.getElementById('p-addStatus');
+    s.textContent = 'Saving…'; s.className = 'status loading';
+    try {
+      const tags = document.getElementById('p-tags').value.split(',').map(t => t.trim()).filter(Boolean);
+      await api('projects:add', {
+        title: document.getElementById('p-title').value.trim(),
+        client_name: document.getElementById('p-client').value.trim(),
+        description: document.getElementById('p-desc').value.trim(),
+        status: document.getElementById('p-status').value,
+        progress: Number(document.getElementById('p-progress').value) || 0,
+        hours_logged: Number(document.getElementById('p-hours').value) || 0,
+        start_date: document.getElementById('p-start').value || null,
+        due_date: document.getElementById('p-due').value || null,
+        hourly_rate: Number(document.getElementById('p-rate').value) || null,
+        budget: Number(document.getElementById('p-budget').value) || null,
+        tags,
+        repo_url: document.getElementById('p-repo').value.trim(),
+        notes: document.getElementById('p-notes').value.trim(),
+        show_publicly: document.getElementById('p-public').checked
+      });
+      s.textContent = '✓ Saved!'; s.className = 'status success';
+      e.target.reset();
+      loadProjects();
+    } catch (err) {
+      s.textContent = 'Failed: ' + err.message; s.className = 'status error';
+    }
+  });
+
+  async function loadProjects() {
+    const list = document.getElementById('p-list');
+    const statsEl = document.getElementById('p-stats');
+    list.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+      const { items } = await api('projects:list');
+      document.getElementById('count-projects').textContent = items.length;
+
+      // Stats
+      const active = items.filter(p => ['planning', 'in_progress', 'review'].includes(p.status));
+      const hours = items.reduce((sum, p) => sum + (Number(p.hours_logged) || 0), 0);
+      const revenue = items.reduce((sum, p) => sum + (Number(p.hours_logged) || 0) * (Number(p.hourly_rate) || 0), 0);
+      statsEl.innerHTML = `
+        <div class="stat"><div class="stat-label">Active</div><div class="stat-value"><em>${active.length}</em></div></div>
+        <div class="stat"><div class="stat-label">Total hours</div><div class="stat-value">${hours.toFixed(1)}</div></div>
+        <div class="stat"><div class="stat-label">Revenue (billable)</div><div class="stat-value">$${revenue.toLocaleString(undefined, {maximumFractionDigits:0})}</div></div>
+        <div class="stat"><div class="stat-label">Total projects</div><div class="stat-value">${items.length}</div></div>
+      `;
+
+      if (!items.length) { list.innerHTML = '<div class="empty">No projects yet.</div>'; return; }
+      list.innerHTML = items.map(p => {
+        const due = p.due_date ? `Due ${new Date(p.due_date).toLocaleDateString()}` : '';
+        const rev = (Number(p.hours_logged) || 0) * (Number(p.hourly_rate) || 0);
+        return `<div class="row ${p.show_publicly ? 'public' : ''}">
+          <div class="row-icon">${(p.title || '?').charAt(0).toUpperCase()}</div>
+          <div class="row-info">
+            <strong>${esc(p.title)} ${p.client_name ? `<span style="color:var(--text-faint);font-weight:400;font-size:12px;">· ${esc(p.client_name)}</span>` : ''}</strong>
+            <small>
+              <span class="badge ${STATUS_BADGE[p.status] || 'badge-dim'}">${STATUS_LABELS[p.status] || p.status}</span>
+              ${p.show_publicly ? '<span class="badge badge-alt">Public</span>' : ''}
+              ${p.hours_logged || 0}h ${rev ? `· $${rev.toFixed(0)}` : ''} ${due ? `· ${due}` : ''}
+            </small>
+            <div class="progress-bar"><div class="progress-fill" style="width:${p.progress || 0}%"></div></div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-ghost btn-small" data-act="bump" data-id="${p.id}" data-progress="${Math.min(100, (p.progress || 0) + 10)}">+10%</button>
+            <button class="btn btn-ghost btn-small" data-act="toggle-public" data-id="${p.id}" data-val="${!p.show_publicly}">${p.show_publicly ? 'Hide' : 'Publish'}</button>
+            <button class="btn btn-danger btn-small" data-act="delete-project" data-id="${p.id}">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+
+      list.querySelectorAll('[data-act="bump"]').forEach(b => b.onclick = async () => {
+        await api('projects:update', { id: b.dataset.id, progress: Number(b.dataset.progress) });
+        loadProjects();
+      });
+      list.querySelectorAll('[data-act="toggle-public"]').forEach(b => b.onclick = async () => {
+        await api('projects:update', { id: b.dataset.id, show_publicly: b.dataset.val === 'true' });
+        loadProjects();
+      });
+      list.querySelectorAll('[data-act="delete-project"]').forEach(b => b.onclick = async () => {
+        if (!confirm('Delete this project?')) return;
+        await api('projects:delete', { id: b.dataset.id });
+        loadProjects();
+      });
+    } catch (err) {
+      list.innerHTML = `<div class="empty" style="color:var(--danger)">${err.message}</div>`;
+    }
   }
 
-  function attachRowHandlers() {
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm('Delete this article?')) return;
-        await api('delete', { id: btn.dataset.id });
-        loadArticles();
+  // =========================================================
+  // PORTFOLIO
+  // =========================================================
+  document.getElementById('f-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const s = document.getElementById('f-addStatus');
+    s.textContent = 'Saving…'; s.className = 'status loading';
+    try {
+      const stack = document.getElementById('f-stack').value.split(',').map(t => t.trim()).filter(Boolean);
+      await api('portfolio:add', {
+        name: document.getElementById('f-name').value.trim(),
+        description: document.getElementById('f-desc').value.trim(),
+        repo_url: document.getElementById('f-repo').value.trim(),
+        live_url: document.getElementById('f-live').value.trim(),
+        language: document.getElementById('f-lang').value.trim(),
+        language_color: document.getElementById('f-langColor').value.trim() || '#4d8dff',
+        tech_stack: stack,
+        category: document.getElementById('f-category').value,
+        completed_date: document.getElementById('f-date').value || null,
+        pinned: document.getElementById('f-pinned').checked
       });
-    });
-    document.querySelectorAll('.toggle-feature').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const featured = btn.dataset.featured === 'true';
-        await api('update', { id: btn.dataset.id, featured });
-        loadArticles();
+      s.textContent = '✓ Saved!'; s.className = 'status success';
+      e.target.reset();
+      document.getElementById('f-langColor').value = '#4d8dff';
+      loadPortfolio();
+    } catch (err) {
+      s.textContent = 'Failed: ' + err.message; s.className = 'status error';
+    }
+  });
+
+  async function loadPortfolio() {
+    const list = document.getElementById('f-list');
+    list.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+      const { items } = await api('portfolio:list');
+      document.getElementById('count-portfolio').textContent = items.length;
+      if (!items.length) { list.innerHTML = '<div class="empty">No portfolio items yet.</div>'; return; }
+      list.innerHTML = items.map(f => {
+        const date = f.completed_date ? new Date(f.completed_date).toLocaleDateString() : 'No date';
+        return `<div class="row ${f.pinned ? 'pinned' : ''}">
+          <div class="row-icon" style="background: ${esc(f.language_color || '#4d8dff')}; color: #000;">${(f.name || '?').charAt(0).toUpperCase()}</div>
+          <div class="row-info">
+            <strong>${esc(f.name)}</strong>
+            <small>
+              ${f.pinned ? '<span class="badge badge-alt">Pinned</span>' : ''}
+              <span class="badge badge-dim">${esc(f.category || '')}</span>
+              ${f.language ? `<span class="badge badge-dim">${esc(f.language)}</span>` : ''}
+              · ${date}
+            </small>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-ghost btn-small" data-act="toggle-pin" data-id="${f.id}" data-val="${!f.pinned}">${f.pinned ? 'Unpin' : 'Pin'}</button>
+            ${f.repo_url ? `<a href="${esc(f.repo_url)}" class="btn btn-ghost btn-small" target="_blank">Repo</a>` : ''}
+            <button class="btn btn-danger btn-small" data-act="delete-portfolio" data-id="${f.id}">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+      list.querySelectorAll('[data-act="toggle-pin"]').forEach(b => b.onclick = async () => {
+        await api('portfolio:update', { id: b.dataset.id, pinned: b.dataset.val === 'true' });
+        loadPortfolio();
       });
-    });
+      list.querySelectorAll('[data-act="delete-portfolio"]').forEach(b => b.onclick = async () => {
+        if (!confirm('Delete this portfolio item?')) return;
+        await api('portfolio:delete', { id: b.dataset.id });
+        loadPortfolio();
+      });
+    } catch (err) {
+      list.innerHTML = `<div class="empty" style="color:var(--danger)">${err.message}</div>`;
+    }
   }
 
-  function escapeHtml(s) {
-    return (s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // =========================================================
+  // LINKS
+  // =========================================================
+  document.getElementById('l-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const s = document.getElementById('l-addStatus');
+    s.textContent = 'Saving…'; s.className = 'status loading';
+    try {
+      await api('links:add', {
+        platform: document.getElementById('l-platform').value,
+        url: document.getElementById('l-url').value.trim(),
+        label: document.getElementById('l-label').value.trim(),
+        sort_order: Number(document.getElementById('l-sort').value) || 0
+      });
+      s.textContent = '✓ Saved!'; s.className = 'status success';
+      e.target.reset();
+      document.getElementById('l-sort').value = 0;
+      loadLinks();
+    } catch (err) {
+      s.textContent = 'Failed: ' + err.message; s.className = 'status error';
+    }
+  });
+
+  async function loadLinks() {
+    const list = document.getElementById('l-list');
+    list.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+      const { items } = await api('links:list', { orderBy: 'sort_order', ascending: true });
+      document.getElementById('count-links').textContent = items.length;
+      if (!items.length) { list.innerHTML = '<div class="empty">No links yet.</div>'; return; }
+      list.innerHTML = items.map(l => `<div class="row">
+        <div class="row-icon">${(l.platform || '?').charAt(0).toUpperCase()}</div>
+        <div class="row-info">
+          <strong>${esc(l.label || l.platform)}</strong>
+          <small>${esc(l.platform)} · sort ${l.sort_order} · <a href="${esc(l.url)}" target="_blank" style="color:var(--accent);">${esc(l.url)}</a></small>
+        </div>
+        <div class="row-actions">
+          <button class="btn btn-danger btn-small" data-act="delete-link" data-id="${l.id}">Delete</button>
+        </div>
+      </div>`).join('');
+      list.querySelectorAll('[data-act="delete-link"]').forEach(b => b.onclick = async () => {
+        if (!confirm('Delete this link?')) return;
+        await api('links:delete', { id: b.dataset.id });
+        loadLinks();
+      });
+    } catch (err) {
+      list.innerHTML = `<div class="empty" style="color:var(--danger)">${err.message}</div>`;
+    }
   }
-  function escapeAttr(s) { return escapeHtml(s); }
+
+  // Helper
+  function esc(s) {
+    return (s || '').toString().replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
 </script>
 
 </body>
