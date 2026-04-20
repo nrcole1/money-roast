@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projects & Work — Signal / AI</title>
+<meta name="description" content="Current projects, portfolio of completed work, and where to find me online." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --bg-raised: #0b111c;
+    --bg-card: #0e1624;
+    --border: #1a2435;
+    --border-hover: #2b3a55;
+    --text: #e6edf7;
+    --text-dim: #8a96ac;
+    --text-faint: #546075;
+    --accent: #4d8dff;
+    --accent-soft: #4d8dff22;
+    --accent-glow: #4d8dff66;
+    --accent-alt: #00d9c0;
+    --success: #4ade80;
+    --warn: #ffb347;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(77, 141, 255, 0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 40%, rgba(0, 217, 192, 0.05), transparent);
+    background-attachment: fixed;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(20px);
+    background: rgba(5, 8, 15, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 18px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 900; font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--text); text-decoration: none;
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 16px var(--accent-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+  .logo em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .nav-links {
+    display: flex; gap: 32px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--text); }
+  .nav-links a.services-link {
+    padding: 6px 14px; border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 80px 32px 40px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--text-dim);
+    padding: 6px 14px; border: 1px solid var(--border);
+    border-radius: 20px; margin-bottom: 32px;
+    background: var(--bg-raised);
+  }
+  .eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--success); border-radius: 50%;
+    box-shadow: 0 0 8px var(--success);
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: italic; font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+
+  /* LINKS BAR */
+  .links-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .link-pill:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-1px);
+  }
+  .link-pill svg { width: 16px; height: 16px; }
+
+  /* SECTIONS */
+  section { max-width: 1240px; margin: 0 auto; padding: 60px 32px; }
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px; flex-wrap: wrap; gap: 16px;
+    border-bottom: 1px solid var(--border); padding-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px; font-weight: 400; letter-spacing: -0.02em;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ONGOING PROJECTS */
+  .ongoing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .project-card:hover { border-color: var(--border-hover); }
+  .project-status-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .status-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+  }
+  .status-in_progress { background: var(--accent-soft); color: var(--accent); }
+  .status-in_progress::before { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .status-planning { background: var(--bg-raised); color: var(--text-dim); }
+  .status-planning::before { background: var(--text-dim); }
+  .status-review { background: rgba(0, 217, 192, 0.15); color: var(--accent-alt); }
+  .status-review::before { background: var(--accent-alt); }
+  .status-blocked { background: rgba(255, 179, 71, 0.15); color: var(--warn); }
+  .status-blocked::before { background: var(--warn); }
+  .due-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .project-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 600;
+    margin-bottom: 8px; letter-spacing: -0.01em;
+  }
+  .project-card p {
+    color: var(--text-dim);
+    font-size: 14px; line-height: 1.5;
+    margin-bottom: 18px;
+  }
+  .progress-wrap {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .progress-bar {
+    flex: 1; height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+  .progress-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 40px;
+    text-align: right;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* PORTFOLIO (GitHub-style grid) */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .repo-card:hover { border-color: var(--border-hover); }
+  .repo-card.pinned { border-left: 3px solid var(--accent-alt); }
+
+  .repo-head {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .repo-icon {
+    width: 16px; height: 16px; flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--text-dim);
+  }
+  .repo-name-wrap { flex: 1; min-width: 0; }
+  .repo-name {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .repo-name:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .pinned-badge {
+    padding: 2px 7px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .repo-desc {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .repo-footer {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    padding-top: 8px;
+  }
+  .repo-lang {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .repo-lang-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .repo-live-link {
+    margin-left: auto;
+    color: var(--accent-alt);
+    text-decoration: none;
+  }
+  .repo-live-link:hover { text-decoration: underline; }
+  .tech-pills {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .tech-pill {
+    padding: 3px 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  /* CATEGORY FILTERS */
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #000; font-weight: 500;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 32px;
+    margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .footer-inner a { color: var(--text-dim); text-decoration: none; margin-left: 24px; }
+  .footer-inner a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: 14px; }
+    .nav-links a:not(.services-link) { display: none; }
+    .hero { padding: 48px 20px 30px; }
+    section { padding: 40px 20px; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-dot"></span>
+      Signal<em>/AI</em>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#news">News</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="services.html" class="services-link">IT Services →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Open to new projects</div>
+  <h1>Projects, work<br>& <em>where to find me.</em></h1>
+  <p class="hero-sub">
+    A running log of what I'm building, what I've shipped, and every place
+    on the internet I exist.
+  </p>
+  <div class="links-bar" id="linksBar">
+    <span class="link-pill" style="opacity:0.5">Loading…</span>
+  </div>
+</header>
+
+<!-- ONGOING -->
+<section id="ongoing">
+  <div class="section-head">
+    <h2 class="section-title">Currently <em>building</em></h2>
+    <span class="section-meta" id="ongoingMeta">// Active projects</span>
+  </div>
+  <div id="ongoingContainer" class="ongoing-grid">
+    <div class="empty-state">Loading projects…</div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-head">
+    <h2 class="section-title">Shipped <em>work</em></h2>
+    <span class="section-meta" id="portfolioMeta">// Archive</span>
+  </div>
+  <div class="filters" id="portfolioFilters">
+    <button class="filter-btn active" data-filter="all">All</button>
+  </div>
+  <div id="portfolioContainer" class="portfolio-grid">
+    <div class="empty-state">Loading portfolio…</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Signal/AI</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="services.html">IT Services</a>
+      <a href="projects.html">Projects</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // SVG icons for link platforms
+  const ICONS = {
+    github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.4 3.6 1 .1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14M7 19v-8H5v8h2M6 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2m13 10v-5c0-2-1-3-3-3-1 0-2 .5-2.3 1.2V11h-2v8h2v-4c0-.8.5-1.5 1.5-1.5S17 14 17 15v4h2Z"/></svg>',
+    twitter: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.9c-.7.3-1.5.5-2.4.6.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4.2 4.2 0 0 0-7.1 3.8A11.6 11.6 0 0 1 3 5a4.2 4.2 0 0 0 1.3 5.5 4 4 0 0 1-1.9-.5v.1a4.2 4.2 0 0 0 3.3 4 4 4 0 0 1-1.8.1 4.2 4.2 0 0 0 3.9 3A8.3 8.3 0 0 1 2 19a11.7 11.7 0 0 0 6.3 1.9c7.6 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.2"/></svg>',
+    x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2h3.3l-7 8 8.3 11h-6.5l-5.1-6.6L6 21H2.7l7.4-8.5L2 2h6.6l4.7 6.1zm-1.2 17h1.8L7.3 4h-2z"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7a3 3 0 0 0-2-2c-1.9-.5-9-.5-9-.5s-7 0-9 .5a3 3 0 0 0-2 2c-.5 2-.5 5-.5 5s0 3 .5 5a3 3 0 0 0 2 2c1.9.5 9 .5 9 .5s7 0 9-.5a3 3 0 0 0 2-2c.5-2 .5-5 .5-5s0-3-.5-5M10 16V8l6 4z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
+    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>',
+    website: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>',
+    mastodon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 8c0-5-3-6-3-6-2-1-5-1-7-1s-5 0-7 1c0 0-3 1-3 6v6c0 5 4 5 7 5 1 0 3 0 4-1v-2l-4 1c-3 0-3-2-3-2v-1l3 1 4-1 3 1c2 0 3-1 4-2 0-2 0-5 2-5z"/></svg>',
+    bluesky: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3c3 2 6 6 7 8 1-2 4-6 7-8 2-1 5-1 5 2 0 1 0 5-1 7-1 3-4 3-7 3 4 1 5 3 3 5l-2 2c-2 3-3-1-4-3 0-2-1-2-1-2s-1 0-1 2c-1 2-2 6-4 3l-2-2c-2-2-1-4 3-5-3 0-6 0-7-3-1-2-1-6-1-7 0-3 3-3 5-2z"/></svg>',
+    dribbble: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 3.1c4 5 5.6 9 6.8 15.6M21 7.3C14 6 6 8 3 15M18.6 19a26 26 0 0 0-9-13"/></svg>',
+    other: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>'
+  };
+
+  const STATUS_LABELS = {
+    planning: 'Planning', in_progress: 'In progress', review: 'In review',
+    blocked: 'Blocked', completed: 'Completed'
+  };
+
+  async function load() {
+    try {
+      const res = await fetch('/api/public');
+      const data = await res.json();
+      renderLinks(data.links || []);
+      renderProjects(data.projects || []);
+      renderPortfolio(data.portfolio || []);
+    } catch (err) {
+      console.error('Load failed:', err);
+      document.getElementById('linksBar').innerHTML = '<span class="link-pill" style="color:var(--text-faint)">Couldn\'t load links.</span>';
+    }
+  }
+
+  function renderLinks(links) {
+    const bar = document.getElementById('linksBar');
+    if (!links.length) {
+      bar.innerHTML = '<span class="link-pill" style="color:var(--text-faint)">No links added yet</span>';
+      return;
+    }
+    bar.innerHTML = links.map(l => {
+      const icon = ICONS[l.platform?.toLowerCase()] || ICONS.other;
+      const label = l.label || l.platform;
+      return `<a href="${esc(l.url)}" target="_blank" rel="noopener" class="link-pill">${icon}<span>${esc(label)}</span></a>`;
+    }).join('');
+  }
+
+  function renderProjects(projects) {
+    const el = document.getElementById('ongoingContainer');
+    const meta = document.getElementById('ongoingMeta');
+    const active = projects.filter(p => p.status !== 'completed');
+    meta.textContent = `// ${active.length} active`;
+    if (!active.length) {
+      el.innerHTML = '<div class="empty-state">No active projects right now.</div>';
+      return;
+    }
+    el.innerHTML = active.map(p => {
+      const due = p.due_date ? `Due ${new Date(p.due_date).toLocaleDateString(undefined, {month:'short', day:'numeric'})}` : '';
+      const tags = (p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+      return `
+        <div class="project-card">
+          <div class="project-status-row">
+            <span class="status-badge status-${esc(p.status)}">${STATUS_LABELS[p.status] || p.status}</span>
+            <span class="due-date">${due}</span>
+          </div>
+          <h3>${esc(p.title)}</h3>
+          ${p.description ? `<p>${esc(p.description)}</p>` : ''}
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" style="width:${Number(p.progress) || 0}%"></div></div>
+            <div class="progress-text">${Number(p.progress) || 0}%</div>
+          </div>
+          ${tags ? `<div class="tags">${tags}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  let allPortfolio = [];
+  function renderPortfolio(items) {
+    allPortfolio = items;
+    const meta = document.getElementById('portfolioMeta');
+    meta.textContent = `// ${items.length} ${items.length === 1 ? 'project' : 'projects'}`;
+
+    // Build category filters
+    const categories = [...new Set(items.map(i => i.category).filter(Boolean))].sort();
+    const filtersEl = document.getElementById('portfolioFilters');
+    filtersEl.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>' +
+      categories.map(c => `<button class="filter-btn" data-filter="${esc(c)}">${esc(c)}</button>`).join('');
+    filtersEl.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        paintPortfolio(btn.dataset.filter);
+      });
+    });
+
+    paintPortfolio('all');
+  }
+
+  function paintPortfolio(filter) {
+    const el = document.getElementById('portfolioContainer');
+    const filtered = filter === 'all' ? allPortfolio : allPortfolio.filter(i => i.category === filter);
+    if (!filtered.length) {
+      el.innerHTML = '<div class="empty-state">No items in this category.</div>';
+      return;
+    }
+    el.innerHTML = filtered.map(repoCard).join('');
+  }
+
+  function repoCard(r) {
+    const tech = (r.tech_stack || []).slice(0, 6).map(t => `<span class="tech-pill">${esc(t)}</span>`).join('');
+    const date = r.completed_date ? new Date(r.completed_date).toLocaleDateString(undefined, {year:'numeric', month:'short'}) : '';
+    const href = r.repo_url || r.live_url || '#';
+    return `
+      <div class="repo-card ${r.pinned ? 'pinned' : ''}">
+        <div class="repo-head">
+          <svg class="repo-icon" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75H11.25v.75c0 .6.4 1 1 1h1a.75.75 0 0 1 0 1.5h-1a2.5 2.5 0 0 1-2.5-2.5v-.75H4.5A2.5 2.5 0 0 1 2 11.5v-9zm1.5 0v9a1 1 0 0 0 1 1h8V1.5h-8a1 1 0 0 0-1 1z"/>
+          </svg>
+          <div class="repo-name-wrap">
+            <a href="${esc(href)}" class="repo-name" target="_blank" rel="noopener">${esc(r.name)}</a>
+            <div class="repo-meta">
+              ${r.pinned ? '<span class="pinned-badge">Pinned</span>' : ''}
+              <span>${esc(r.category || '')}</span>
+              ${date ? `<span>· ${date}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        ${r.description ? `<div class="repo-desc">${esc(r.description)}</div>` : ''}
+        <div class="repo-footer">
+          ${r.language ? `
+            <span class="repo-lang">
+              <span class="repo-lang-dot" style="background:${esc(r.language_color || '#4d8dff')}"></span>
+              ${esc(r.language)}
+            </span>` : ''}
+          ${r.live_url ? `<a href="${esc(r.live_url)}" class="repo-live-link" target="_blank" rel="noopener">Live ↗</a>` : ''}
+        </div>
+        ${tech ? `<div class="tech-pills">${tech}</div>` : ''}
+      </div>
+    `;
+  }
+
+  function esc(s) {
+    return (s || '').toString().replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  load();
+</script>
+
+</body>
+</html>
