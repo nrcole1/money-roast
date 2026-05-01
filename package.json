@@ -5,5 +5,9 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "check": "node --check api/admin.js && node --check api/articles.js && node --check api/contact.js && node --check api/public.js && node --check api/subscribe.js"
   }
 }

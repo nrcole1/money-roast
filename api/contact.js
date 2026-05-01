@@ -1,10 +1,11 @@
 // /api/contact.js
 // Handles contact form submissions from the IT services page.
-// By default, logs to Vercel and optionally pings a webhook (Discord/Slack/etc).
-// You can also wire this into Resend/SendGrid to get a real email in your inbox.
+
+import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -23,24 +24,30 @@ export default async function handler(req, res) {
   }
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!emailOk) return res.status(400).json({ error: 'Please enter a valid email.' });
+  if (message.length > 5000) return res.status(400).json({ error: 'Please keep your message under 5000 characters.' });
 
   try {
-    console.log('NEW_CONTACT:', { name, email, company, message: message.slice(0, 200), at: new Date().toISOString() });
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY) {
+      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([{ name, email, company, message }]);
+      if (error) throw error;
+    } else {
+      console.log('NEW_CONTACT:', { name, email, company, message: message.slice(0, 200), at: new Date().toISOString() });
+    }
 
-    // === OPTIONAL: ping a Discord/Slack webhook ===
     if (process.env.NOTIFY_WEBHOOK) {
       await fetch(process.env.NOTIFY_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: `📨 **New IT services inquiry**\n**From:** ${name} (${email})\n**Company:** ${company || 'n/a'}\n**Message:**\n${message}`,
-          text: `New IT services inquiry from ${name} (${email}) — ${message}`
+          content: `**New IT services inquiry**\n**From:** ${name} (${email})\n**Company:** ${company || 'n/a'}\n**Message:**\n${message}`,
+          text: `New IT services inquiry from ${name} (${email}) - ${message}`
         })
       }).catch(err => console.error('Webhook failed:', err.message));
     }
 
-    // === OPTIONAL: send yourself the email via Resend ===
-    // Set RESEND_API_KEY and CONTACT_TO_EMAIL in Vercel env vars to enable.
     if (process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL) {
       await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -49,7 +56,7 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'Signal/AI <onboarding@resend.dev>', // change to your verified domain
+          from: process.env.CONTACT_FROM_EMAIL || 'Signal/AI <onboarding@resend.dev>',
           to: process.env.CONTACT_TO_EMAIL,
           reply_to: email,
           subject: `New IT inquiry from ${name}`,

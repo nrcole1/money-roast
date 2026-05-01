@@ -1,0 +1,54 @@
+/* Shared Signal/AI site primitives. Page-specific CSS can stay inline while the site is still lightweight. */
+:root {
+  --bg: #05080f;
+  --bg-raised: #0b111c;
+  --bg-card: #0e1624;
+  --border: #1a2435;
+  --border-hover: #2b3a55;
+  --text: #e6edf7;
+  --text-dim: #8a96ac;
+  --text-faint: #546075;
+  --accent: #4d8dff;
+  --accent-soft: #4d8dff22;
+  --accent-glow: #4d8dff66;
+  --accent-alt: #00d9c0;
+  --warn: #ffb347;
+  --success: #4ade80;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+a { text-underline-offset: 3px; }
+img { max-width: 100%; display: block; }
+button, input, textarea { font: inherit; }
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 200;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 16px; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-alt);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

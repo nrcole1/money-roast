@@ -1,0 +1,19 @@
+# Sensitive files
+keys.txt
+*.env
+.env*
+
+# Archives / local backups
+*.zip
+*.tar.gz
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Node
+node_modules/

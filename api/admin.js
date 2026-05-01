@@ -1,8 +1,8 @@
 // /api/admin.js
-// Single password-protected admin endpoint handling articles, projects, portfolio, and links.
-// Actions use `resource:verb` format (e.g., "articles:add", "projects:list").
+// Password-protected admin endpoint for articles, projects, portfolio, and links.
 
 import { createClient } from '@supabase/supabase-js';
+import { timingSafeEqual } from 'node:crypto';
 
 const TABLES = {
   articles: 'articles',
@@ -11,10 +11,27 @@ const TABLES = {
   links: 'links'
 };
 
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
+const RATE_LIMIT_MAX = 40;
+const attempts = new Map();
+
 export default async function handler(req, res) {
-  const password = req.headers['x-admin-password'];
-  if (!password || password !== process.env.ADMIN_PASSWORD) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const ip = clientIp(req);
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests. Try again in a few minutes.' });
+  }
+
+  if (!isAuthorized(req.headers['x-admin-password'])) {
     return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+    return res.status(500).json({ error: 'Missing Supabase admin environment variables.' });
   }
 
   let body = req.body;
@@ -80,6 +97,30 @@ export default async function handler(req, res) {
   }
 }
 
+function isAuthorized(password) {
+  const expected = process.env.ADMIN_PASSWORD || '';
+  if (!password || !expected) return false;
+  const a = Buffer.from(String(password));
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
+function clientIp(req) {
+  return (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').toString().split(',')[0].trim();
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const bucket = attempts.get(ip) || { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+  if (now > bucket.resetAt) {
+    attempts.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  bucket.count += 1;
+  attempts.set(ip, bucket);
+  return bucket.count > RATE_LIMIT_MAX;
+}
+
 function defaultOrder(resource) {
   if (resource === 'articles') return 'created_at';
   if (resource === 'projects') return 'updated_at';
@@ -115,10 +156,12 @@ function sanitize(resource, body) {
   return out;
 }
 
-async function fetchMetadata(url) {
-  if (!url) return { error: 'No URL provided' };
+async function fetchMetadata(rawUrl) {
+  const checked = validateExternalUrl(rawUrl);
+  if (!checked.ok) return { error: checked.error };
+
   try {
-    const response = await fetch(url, {
+    const response = await fetch(checked.url, {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Signal-AI-Bot/1.0)' },
       signal: AbortSignal.timeout(8000)
     });
@@ -127,12 +170,32 @@ async function fetchMetadata(url) {
     return {
       title: decodeEntities(meta(html, 'og:title') || meta(html, 'twitter:title') || extractTag(html, 'title') || '').trim(),
       description: decodeEntities(meta(html, 'og:description') || meta(html, 'twitter:description') || meta(html, 'description') || '').trim().slice(0, 250),
-      image_url: (meta(html, 'og:image') || meta(html, 'twitter:image') || '').trim(),
-      source: decodeEntities(meta(html, 'og:site_name') || new URL(url).hostname.replace('www.', '') || '').trim()
+      image_url: absolutizeUrl(meta(html, 'og:image') || meta(html, 'twitter:image') || '', checked.url),
+      source: decodeEntities(meta(html, 'og:site_name') || new URL(checked.url).hostname.replace('www.', '') || '').trim()
     };
   } catch (err) {
     return { error: err.message };
   }
+}
+
+function validateExternalUrl(rawUrl) {
+  if (!rawUrl) return { ok: false, error: 'No URL provided' };
+  try {
+    const url = new URL(rawUrl);
+    const blockedHosts = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
+    if (!['http:', 'https:'].includes(url.protocol)) return { ok: false, error: 'Only http and https URLs are supported.' };
+    if (blockedHosts.includes(url.hostname) || url.hostname.endsWith('.local')) {
+      return { ok: false, error: 'Local and private hostnames are not supported.' };
+    }
+    return { ok: true, url: url.toString() };
+  } catch {
+    return { ok: false, error: 'Invalid URL.' };
+  }
+}
+
+function absolutizeUrl(value, base) {
+  if (!value) return '';
+  try { return new URL(value, base).toString(); } catch { return value.trim(); }
 }
 
 function meta(html, prop) {
@@ -148,7 +211,7 @@ function meta(html, prop) {
 }
 
 function extractTag(html, tag) {
-  const m = html.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+  const m = html.match(new RegExp(`<${tag}[^>]*>([\s\S]*?)<\/${tag}>`, 'i'));
   return m ? m[1] : '';
 }
 
