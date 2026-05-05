@@ -276,6 +276,152 @@
     color: var(--accent);
   }
 
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+  .pricing-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    position: relative;
+    transition: all 0.25s;
+  }
+  .pricing-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+  .pricing-card.featured-plan {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(77,141,255,0.07), var(--bg-card));
+  }
+  .plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 4px 14px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .plan-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+  }
+  .plan-name {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .plan-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .plan-price sup {
+    font-size: 22px;
+    vertical-align: top;
+    margin-top: 6px;
+    display: inline-block;
+  }
+  .plan-cadence {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-bottom: 28px;
+  }
+  .plan-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 24px;
+  }
+  .plan-desc {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 32px;
+  }
+  .plan-features li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 9px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .plan-features li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .plan-cta {
+    display: block;
+    text-align: center;
+    padding: 13px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .plan-cta:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .pricing-card.featured-plan .plan-cta {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 700;
+  }
+  .pricing-card.featured-plan .plan-cta:hover {
+    background: var(--accent-alt);
+    border-color: var(--accent-alt);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .pricing-note {
+    text-align: center;
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
   /* PROCESS */
   .process {
     display: grid;
@@ -431,7 +577,8 @@
     <div class="nav-links">
       <a href="index.html#news">News</a>
       <a href="index.html#tools">Tools</a>
-      <a href="index.html#newsletter">Newsletter</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
       <a href="services.html" class="services-link">IT Services</a>
     </div>
   </div>
@@ -531,6 +678,70 @@
       </ul>
     </div>
   </div>
+</section>
+
+<section id="pricing">
+  <div class="section-head">
+    <h2 class="section-title">Simple <em>pricing</em></h2>
+    <span class="section-meta">// No surprise invoices</span>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <div class="plan-label">01 / Ad-hoc</div>
+      <div class="plan-name">Hourly</div>
+      <div class="plan-price"><sup>$</sup>75</div>
+      <div class="plan-cadence">/ hour · no minimum</div>
+      <hr class="plan-divider" />
+      <p class="plan-desc">Best for one-time fixes, quick setups, second opinions, and anything that doesn't need a full project scope.</p>
+      <ul class="plan-features">
+        <li>Billed in 30-min increments</li>
+        <li>No retainer required</li>
+        <li>Remote or on-site (Gainesville FL)</li>
+        <li>Summary of work + recommendations</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Get started →</a>
+    </div>
+
+    <div class="pricing-card featured-plan">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-label">02 / Monthly</div>
+      <div class="plan-name">Retainer</div>
+      <div class="plan-price"><sup>$</sup>450</div>
+      <div class="plan-cadence">/ month · starting at 6 hrs</div>
+      <hr class="plan-divider" />
+      <p class="plan-desc">Ongoing IT support for small businesses. Priority response, monthly check-ins, and a dedicated point of contact who already knows your setup.</p>
+      <ul class="plan-features">
+        <li>6 hrs included · $70/hr after</li>
+        <li>Priority response time</li>
+        <li>Monthly system health check</li>
+        <li>User support & troubleshooting</li>
+        <li>Software updates & patch management</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Start retainer →</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="plan-label">03 / Project</div>
+      <div class="plan-name">Flat Rate</div>
+      <div class="plan-price" style="font-size:30px;padding-top:8px;">Custom</div>
+      <div class="plan-cadence">scoped up front · no surprises</div>
+      <hr class="plan-divider" />
+      <p class="plan-desc">For defined deliverables: website builds, AI integrations, network setups. You get a clear proposal before anything starts.</p>
+      <ul class="plan-features">
+        <li>Website build — from $600</li>
+        <li>AI workflow integration — from $400</li>
+        <li>Network setup — from $300</li>
+        <li>Fixed scope, fixed price</li>
+        <li>Free 30-min discovery call</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Get a quote →</a>
+    </div>
+
+  </div>
+  <p class="pricing-note">All prices in USD · Free discovery call for any engagement · Gainesville FL + remote</p>
 </section>
 
 <section>
